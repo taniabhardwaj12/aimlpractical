@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cstdlib>
+#include <chrono>
+using namespace std;
+void selection(int a[], int n) {
+ int i, j, p;
+ for (j = 0; j < n - 1; j++) {
+ p = j;
+ for (i = j + 1; i < n; i++) {
+ if (a[i] < a[p]) {
+ p = i;
+ }
+ }
+ swap(a[j], a[p]);
+ }
+ cout << "Sorted array is: ";
+ for (int i = 0; i < n; i++) {
+ cout << a[i] << " ";
+ }
+ cout << endl;
+}
+int main() {
+ const int n = 100;
+ int a[n];
+ srand(time(0)); // Seed the random number generator
+for (int i = 0; i < n; i++) {
+ a[i] = rand() % n + 1; // random values between 1 and n
+ }
+ auto start = chrono::high_resolution_clock::now();
+ selection(a, n);
+ auto end = chrono::high_resolution_clock::now();
+ chrono::duration<double, milli> elapsed = end - start;
+ cout << "Time taken to sort the array: " << elapsed.count() << " ms" << endl;
+ return 0;
+}
