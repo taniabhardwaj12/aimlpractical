@@ -1,0 +1,57 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+struct Item
+{
+int index;
+float profit, weight, ratio;
+};
+bool compare(Item a, Item b)
+{
+return a.ratio > b.ratio;
+}
+int main()
+{
+const int n = 5;
+float maxWeight = 20;
+float totalProfit = 0;
+float p[n] = {10, 20, 12, 14, 22};
+float w[n] = {5, 4, 4, 5, 6};
+Item items[n];
+for (int i = 0; i < n; i++)
+{
+items[i].index = i + 1; 
+items[i].profit = p[i];
+items[i].weight = w[i];
+items[i].ratio = p[i] / w[i];
+}
+sort(items, items + n, compare);
+cout << "Items sorted by profit/weight ratio:\n";
+for (int i = 0; i < n; i++)
+{
+cout << "Item " << items[i].index << ": Profit = " <<
+items[i].profit
+<< ", Weight = " << items[i].weight
+<< ", P/W = " << items[i].ratio << endl;
+}
+cout << "\nSelecting items for the knapsack:\n";
+for (int i = 0; i < n && maxWeight > 0; i++)
+{
+if (items[i].weight <= maxWeight)
+{
+cout << "Taking full Item " << items[i].index << endl;
+maxWeight -= items[i].weight;
+totalProfit += items[i].profit;
+}
+else
+{
+float fraction = maxWeight / items[i].weight;
+cout << "Taking " << fraction * 100 << "% of Item " <<
+items[i].index << endl;
+totalProfit += items[i].profit * fraction;
+maxWeight = 0;
+}
+}
+cout << "\nTotal profit earned = " << totalProfit << endl;
+return 0;
+}
