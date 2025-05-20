@@ -1,70 +1,76 @@
-#include<iostream>
-#include<conio.h>
+#include <iostream>
 using namespace std;
-struct node{
- int key;
- struct node* left;
- struct node* right;
- node(int val){
- key=val;
- left=right=nullptr;
- }
-};
-node* insert(node* root,int val){
- if(root==nullptr){
- return new node(val);
- }
- if(val<root->key){
- root->left=insert(root->left,val);
- }
- else{
- root->right=insert(root->right,val);
- }
- return root;
-}
-void inorder(node* root){
- if(root!=nullptr){
- inorder(root->left);
- cout<<root->key<<" ";
- inorder(root->right);
- }
-}
-void preOrder(node* root){
- if(root!=nullptr){
- cout<<root->key<<" ";
- preOrder(root->left);
- preOrder(root->right);
- }
-}
-void postOrder(node* root){
- if(root!=nullptr){
- postOrder(root->left);
- postOrder(root->right);
- cout<<root->key<<" ";
- }
-}
-int main()
-{
- node* root=nullptr;
- root=insert(root,15);
- insert(root,17);
- insert(root,8); 
-insert(root,7);
- insert(root,9);
- insert(root,10);
- insert(root,12);
- insert(root,13);
- insert(root,16);
- insert(root,19);
- insert(root,11);
 
- cout<<"Inorder traversal: "<<endl;
- inorder(root);
- cout<<endl<<endl;
- cout<<"\nPre Order traversal: "<<endl;
- preOrder(root);
- cout<<endl<<endl;
- cout<<"\nPost Order traversal: "<<endl;
- postOrder(root);
- return 0;
+struct Node {
+    int key;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        key = val;
+        left = right = nullptr;
+    }
+};
+
+Node* insert(Node* root, int val) {
+    if (root == nullptr) {
+        return new Node(val);
+    }
+
+    if (val < root->key) {
+        root->left = insert(root->left, val);
+    } else {
+        root->right = insert(root->right, val);
+    }
+
+    return root;
+}
+
+void inorder(Node* root) {
+    if (root != nullptr) {
+        inorder(root->left);
+        cout << root->key << " ";
+        inorder(root->right);
+    }
+}
+
+void preOrder(Node* root) {
+    if (root != nullptr) {
+        cout << root->key << " ";
+        preOrder(root->left);
+        preOrder(root->right);
+    }
+}
+
+void postOrder(Node* root) {
+    if (root != nullptr) {
+        postOrder(root->left);
+        postOrder(root->right);
+        cout << root->key << " ";
+    }
+}
+
+int main() {
+    Node* root = nullptr;
+
+    root = insert(root, 15);
+    insert(root, 17);
+    insert(root, 8); 
+    insert(root, 7);
+    insert(root, 9);
+    insert(root, 10);
+    insert(root, 12);
+    insert(root, 13);
+    insert(root, 16);
+    insert(root, 19);
+    insert(root, 11);
+
+    cout << "Inorder traversal:\n";
+    inorder(root);
+    cout << "\n\nPreorder traversal:\n";
+    preOrder(root);
+    cout << "\n\nPostorder traversal:\n";
+    postOrder(root);
+
+    return 0;
 }
