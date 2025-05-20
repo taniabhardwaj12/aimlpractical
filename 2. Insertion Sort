@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
+using namespace std;
+void insertion(int a[], int n)
+{
+// Fill array with random values between 1 and 100
+for (int i = 0; i < n; i++)
+{
+a[i] = rand() % 100 + 1;
+}
+// Insertion Sort
+for (int j = 1; j < n; j++)
+{
+int key = a[j];
+int i = j - 1;
+while (i >= 0 && a[i] > key)
+{
+a[i + 1] = a[i];
+i--;
+}
+a[i + 1] = key;
+}
+// Print sorted array
+cout << "Sorted array is:\n"; 
+for (int i = 0; i < n; i++)
+{
+cout << a[i] << " ";
+}
+cout << endl;
+}
+int main()
+{
+const int n = 1000;
+int a[n];
+srand(time(0)); // Seed random number generator
+auto start = chrono::high_resolution_clock::now();
+insertion(a, n);
+auto end = chrono::high_resolution_clock::now();
+chrono::duration<double, milli> elapsed = end - start;
+cout << "\nTime taken to sort the array: " << elapsed.count() << " ms" <<
+endl;
+return 0;
+}
