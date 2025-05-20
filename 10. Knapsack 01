@@ -1,0 +1,32 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main() {
+const int n = 5;
+int W = 20;
+int profit[n + 1] = {0, 10, 20, 12, 14, 22};
+int weight[n + 1] = {0, 5, 4, 4, 5, 6};
+int dp[n + 1][W + 1];
+for (int i = 0; i <= n; i++) {
+for (int w = 0; w <= W; w++) {
+if (i == 0 || w == 0)
+dp[i][w] = 0;
+else if (weight[i] <= w)
+dp[i][w] = max(profit[i] + dp[i - 1][w - weight[i]], dp[i -
+1][w]);
+else
+dp[i][w] = dp[i - 1][w];
+}
+}
+cout << "Maximum profit: " << dp[n][W] << endl;
+int w = W;
+cout << "Items selected: ";
+for (int i = n; i > 0 && w > 0; i--) {
+if (dp[i][w] != dp[i - 1][w]) {
+cout << i << " ";
+w -= weight[i];
+}
+}
+cout << endl;
+return 0;
+}
