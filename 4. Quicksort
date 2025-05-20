@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cstdlib>
+#include <chrono>
+using namespace std;
+int partition(int a[], int p, int r)
+{
+ int x = a[r];
+ int i = p - 1;
+ for (int j = p; j < r; j++)
+ {
+ if (a[j] <= x)
+ {
+ i++;
+ swap(a[i], a[j]);
+ }
+ }
+ swap(a[i + 1], a[r]);
+ return i + 1;
+}
+void quick_sort(int a[], int p, int r)
+{
+ if (p < r)
+ {
+ int q = partition(a, p, r);
+ quick_sort(a, p, q - 1);
+ quick_sort(a, q + 1, r);
+ }
+}
+int main()
+{
+ int n;
+ cout << "Enter the size of the array: ";
+ cin >> n;
+ int a[n];
+ srand(time(0));
+ for (int i = 0; i < n; i++)
+ {
+ a[i] = rand() % n + 1;
+ }
+ auto start = chrono::high_resolution_clock::now();
+ quick_sort(a, 0, n - 1);
+ auto end = chrono::high_resolution_clock::now();
+ chrono::duration<double, nano> elapsed = end - start;
+ cout << "\nSorted array is:\n";
+ for (int i = 0; i < n; i++)
+ {
+ cout << a[i] << " "; 
+ }
+ cout << "\n\nTime taken to sort the array: " << elapsed.count() << "
+nanoseconds" << endl;
+ return 0;
+}
